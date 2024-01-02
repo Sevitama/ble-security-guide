@@ -1,0 +1,109 @@
+<div class="bubble">
+    <h2>Attacks</h2>
+    <h3>Identity Tracking</h3>
+    <p>
+        Identity tracking refers to the method of monitoring a user's movements and activities based on their Bluetooth
+        Low Energy (BLE) connections. This tracking is feasible because BLE packets can be identified by their device
+        addresses. Tracking becomes particularly easy when public addresses (which are globally unique and registered)
+        or long-term random addresses are used. These addresses can act as unique identifiers, allowing for the
+        continuous monitoring of a device.
+    </p>
+
+    <h4>Mitigation</h4>
+    <p>
+        To counteract identity tracking, BLE employs the concept of resolvable and non-resolvable private addresses for
+        its random device types. Resolvable private addresses offer a significant layer of protection against tracking.
+        In this approach, both devices involved in the connection exchange an Identity Resolving Key (IRK). This key is
+        used to frequently generate new private addresses, making each connection appear as if it's with a different
+        device. This frequent change of address disrupts the continuity needed for effective tracking. On the other
+        hand, non-resolvable private addresses, though less common, can be particularly useful in certain applications,
+        such as beacons, where persistent identity is not critical. It's advisable to avoid using Public Device
+        Addresses, as they can be easily tracked due to their unique and constant nature.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Passive eavesdropping</h3>
+    <p>
+        Passive eavesdropping, also known as Sniffing, is a technique where an attacker covertly listens to the
+        communication between two Bluetooth Low Energy (BLE) devices. In this context, the attacker passively observes
+        the data exchange without actively injecting malicious content. Sniffing is viable in BLE communications when
+        the devices are connected but not paired, or if the attacker has access to the Short Term Key (STK) in a LE
+        Legacy connection, or the Long Term Key (LTK) in an LE Secure Connection.
+    </p>
+
+    <h4>Injection</h4>
+    <p>
+        Injection attacks become feasible when a connection is compromised through sniffing. If the attacker acquires
+        the necessary keys in a paired connection, they can send forged packets to the devices, imitating legitimate
+        data transmissions. This technique is distinct from a Man-in-the-Middle (MitM) attack, where the attacker
+        actively relays and potentially alters the communication between two devices. Tools such as
+        <a href="https://github.com/virtualabs/btlejack" target="_blank">btlejack</a>
+        and
+        <a href="https://homepages.laas.fr/rcayre/mirage-documentation/injectable.html?highlight=mitm" target="_blank"
+            >InjectaBLE</a
+        >
+        facilitate injection attacks on poorly secured BLE connections.
+    </p>
+
+    <h4>Possible Cases</h4>
+    <h5>BLE Connection</h5>
+    <p>
+        Inherently, BLE connections are not encrypted, making them susceptible to eavesdropping. If an attacker is
+        present at the initiation of a connection and captures the CONNECT_IND (Connection Indication), they can
+        potentially monitor the entire communication process and intercept all packets transmitted between the devices.
+        Conversely, intercepting existing connections is more challenging if the attacker was not present initially.
+        They must track the connections by their access addresses and recover additional radio frequency parameters,
+        such as Channel Map, timeouts, hops, windows, etc.
+    </p>
+
+    <h5>LE Legacy</h5>
+    <p>
+        For an LE Legacy paired connection, the attacker needs the Short Term Key (STK) to eavesdrop. During the pairing
+        process, if the attacker is present, they can calculate the STK. For example, in the 'Just Works' pairing
+        method, the Temporary Key (TK) is set to 0x00, enabling the attacker to compute the STK using all relevant
+        parameters. In the 'Passkey Entry' method, the attacker must intercept the initial communication packets and can
+        then attempt to brute-force the TK (which has 999999 possible combinations). Essential packets for this process
+        include the two random values, LL_ENC_REQ, LL_ENC_RSP, and LL_START_ENC_REQ. In contrast, the Out of Band (OOB)
+        method presents more difficulty since the TK could be any 128-bit value, rendering brute-force attacks
+        impractical.
+    </p>
+
+    <h5>LE Secure Connection</h5>
+    <p>
+        LE Secure Connections employ Elliptic Curve Diffie-Hellman (ECDH) public key cryptography, significantly
+        enhancing protection against sniffing attacks.
+    </p>
+
+    <h4>Mitigation</h4>
+    <p>
+        To defend against passive eavesdropping, it is recommended to use at least an LE Secure Connection pairing
+        method or LE Legacy with OOB data. When utilizing OOB data, ensure that the transfer medium (like NFC, which
+        benefits from close proximity) is also secure. Unpaired regular BLE connections should not be used for
+        transmitting sensitive information due to their inherent security vulnerabilities.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Man-in-the-middle (MITM)</h3>
+    <p>
+        A Man-in-the-Middle (MITM) attack occurs when an attacker intercepts and manipulates communication between two
+        parties. In this type of attack, the attacker establishes separate connections with each party, relaying and
+        possibly altering the communications between them. The parties involved believe they have a secure direct
+        connection, but in reality, they are both communicating through the attacker. This interception is critical for
+        the attack, as without it, the two original devices would not be able to communicate. Additionally, MITM attacks
+        can involve hijacking an existing connection using a LL_CONNECTION_UPDATE_IND packet. Tools such as
+        <a href="https://homepages.laas.fr/rcayre/mirage-documentation/injectable.html?highlight=mitm" target="_blank"
+            >InjectaBLE</a
+        >
+        offer experimental implementations of such attacks.
+    </p>
+
+    <h4>Mitigation</h4>
+    <p>
+        To secure your Bluetooth Low Energy (BLE) connections from MITM attacks, it's recommended to use at least the LE
+        Secure Connection pairing method. This method can involve Numeric Comparison or Passkey Entry. Another option is
+        to use Out-of-Band (OOB) data for establishing connections. When employing OOB data, ensure that the medium used
+        for transferring this data is secure. For instance, Near Field Communication (NFC) is considered secure due to
+        its requirement for close physical proximity. It's important to avoid using standard BLE connections without
+        secure pairing when handling sensitive data.
+    </p>
+</div>

@@ -1,0 +1,135 @@
+<div class="bubble">
+    <h2>Operating Systems</h2>
+    <p>
+        The Bluetooth standard, as outlined by the SIG, provides a detailed specification for a protocol. This
+        specification includes the theoretical framework and implementation guidelines. The actual implementation of the
+        Bluetooth standard is carried out by private manufacturers or open-source communities within their respective
+        operating systems and SDKs. It's important to note that each implementation may vary, with its own unique
+        quirks, functions, and interfaces.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Android and iOS</h3>
+    <p>
+        Both Android and iOS have a comprehensive Bluetooth stack implementation that is accessible via settings or an
+        internal API for apps, supporting BR/EDR and BLE right out of the box. Users can connect, pair, and bond with
+        peripherals. Often the users do not notice any difference between pairing and bonding due to the security
+        processes being entirely managed by the operating system, as developers have no control over the pairing
+        parameters. When apps are developed to function as clients connecting to peripherals, they can establish
+        connections to BLE devices using the APIs provided by iOS and Android, which by default are unencrypted
+        connections. For improved security, pairing the device is necessary, which the operating system automatically
+        initiates when an app tries to access a characteristic with elevated permissions. The peripheral responds with
+        an 'Insufficient Authentication' message, prompting the OS to start the pairing and bonding process.
+    </p>
+    <p>
+        iOS developers are unable to initiate pairing programmatically; it can only be done by interacting with
+        authenticated characteristics. Additionally, iOS does not support initiating connections with Out-of-Band (OOB)
+        data like NFC, and it will not initiate a pairing sequence upon reading an NFC tag with OOB data. In contrast,
+        Android developers have the capability to initiate pairing and bonding using the createBond() function. Android
+        also supports the use of OOB data, including NFC, for initiating connections.
+    </p>
+    <p>
+        During the operating system-initiated pairing process with the peripheral, the request always includes following
+        parameters designed to ensure the highest possible security level for BLE connections:
+    </p>
+    <div class="centered">
+        <table class="table-parameters">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>IO Capabilities</td>
+                    <td>KeyboardDisplay</td>
+                </tr>
+                <tr>
+                    <td>OOB Data</td>
+                    <td>No data present</td>
+                </tr>
+                <tr>
+                    <td>Bonding Flag</td>
+                    <td>Set</td>
+                </tr>
+                <tr>
+                    <td>MITM Flag</td>
+                    <td>Set</td>
+                </tr>
+                <tr>
+                    <td>Secure Connection Flag</td>
+                    <td>Set</td>
+                </tr>
+                <tr>
+                    <td>Keypress Flag</td>
+                    <td>Not set</td>
+                </tr>
+                <tr>
+                    <td>CT2 Flag</td>
+                    <td>Set</td>
+                </tr>
+                <tr>
+                    <td>Max. Key encryption size</td>
+                    <td>16 bytes</td>
+                </tr>
+                <tr>
+                    <td>Initiator & Responder Key Distribution</td>
+                    <td>All requested</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>These informations may also be valid for iPadOS, MacOS and Windows, but this is not confirmed/tested.</p>
+</div>
+<div class="bubble">
+    <h3>Custom OS</h3>
+    <p>
+        In custom operating systems and implementations, especially in embedded systems that often act as peripherals or
+        servers, the responsibility for configuration lies entirely with the developers. They have the freedom to define
+        their own parameters for pairing, decide on address types to use, manage Bluetooth Low Energy (BLE) connections,
+        and choose which data should be unencrypted, authenticated, and/or encrypted.
+    </p>
+    <p>
+        This area offers a great opportunity to enhance security. Developers can make use of Software Development Kits
+        (SDKs) and Hardware Abstraction Layers provided by manufacturers. These tools and built-in features allow
+        developers to create customized applications that meet their specific needs. It's really important for
+        developers to ensure that they configure the appropriate parameters to support the correct Security Mode and
+        Level. While creating a custom Bluetooth stack may be tempting, it's generally not advised unless one has deep
+        expertise in the area.
+    </p>
+    <p>
+        On the other hand should you not blindly trust the SDKs provided by manufacturers. Unfortunately, these SDKs can
+        sometimes have vulnerabilities due to human errors in the libraries or non-compliance with Bluetooth standards.
+        A good example is the
+        <a href="https://asset-group.github.io/disclosures/sweyntooth/" target="_blank">Sweyntooth vulnerability set</a
+        >, which was released around 2020 and consisted of 17 vulnerabilities in BLE implementations across various
+        manufacturers. So, it's absolutely vital for developers to thoroughly verify that the SDK aligns with their
+        security goals. You need to make sure that it sets the right parameters, accurately enforces characteristic
+        permissions, and uses proper encryption methods, among other things.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Web Bluetooth API</h3>
+    <p>
+        The Web Bluetooth API enables websites to communicate with nearby Bluetooth devices through the device's
+        hardware Bluetooth controller, using JavaScript to connect and interact with BLE devices. This technology
+        primarily functions as a Client/Central device and is supported by various browsers such as Chrome, Opera, and
+        Edge, working across different hardware (PC, Mac, iPhone, etc.), Currently (End of 2023) it is still required to
+        enable experimental web platform features in said browsers. The primary advantage of the Web Bluetooth API is
+        its capacity to allow web developers to create applications that can interact directly with Bluetooth devices.
+        This opens up a range of possibilities for IoT and other applications, facilitating out-of-the-box functionality
+        like progressive web apps, irrespective of the operating system.
+    </p>
+    <p>
+        As an experimental feature, the Web Bluetooth API doesn't yet provide full functionality comparable to custom
+        hardware or native iOS/Android apps. However, connecting to devices is relatively straightforward, allowing
+        control over which devices should be visible during scanning and which connections are permitted. From a
+        security perspective, it is similar to other devices; connections initiated via the webpage are unencrypted. For
+        secure communication, pairing the Central device with the Peripheral is necessary, either through the operating
+        system's Bluetooth settings or by enforcing permissions on characteristics. When the Web Bluetooth API wants to
+        read or write characteristics that require elevated permissions, it automatically initiates pairing through the
+        operating system. The operating system will utilize request parameters as typically defined for iOS/Android,
+        while the response parameters depend on the Peripheral's implementation.
+    </p>
+</div>

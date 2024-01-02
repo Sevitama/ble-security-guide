@@ -1,0 +1,81 @@
+<div class="bubble">
+    <h2>Overview</h2>
+    <p>
+        The SIG Bluetooth standard can quickly become overwhelming, especially when confronted with the extensive
+        2800-page Bluetooth Core Specification. Navigating through the diverse Bluetooth standards, such as BR/EDR and
+        BLE, along with the various protocols, connection types, and connection establishment algorithms, can indeed be
+        daunting.
+    </p>
+
+    <h3>Bluetooth Technologies</h3>
+    <p>There are two primary Bluetooth technologies, each known by different names, adding to the confusion:</p>
+    <ul>
+        <li>
+            <strong>Bluetooth Classic (BR/EDR):</strong> This technology is more familiar to end-users, enabling
+            peer-to-peer connections and higher bandwidth data transfers. It operates with a strict set of profiles and
+            use cases.
+        </li>
+        <li>
+            <strong>Bluetooth Low Energy (BLE) or Bluetooth Smart:</strong> BLE is designed for low energy consumption
+            and custom applications. It supports various connection types including peer-to-peer, 1-to-many, and mesh.
+            BLE is versatile, allowing for custom profiles and use cases.
+        </li>
+    </ul>
+</div>
+<div class="bubble">
+    <h3>Actors</h3>
+    <p>
+        Understanding the roles in BLE can be confusing due to similar or interchangeable terminology. Here's a
+        breakdown of the different roles:
+    </p>
+    <ul>
+        <li>
+            <strong>Master/Central:</strong> These devices scan and initiate connections, typically being a user's
+            smartphone.
+        </li>
+        <li>
+            <strong>Client:</strong> These are usually the Master/Central devices that access information over the GATT
+            protocol of an established BLE connection.
+        </li>
+        <li>
+            <strong>Slave/Peripheral:</strong> These devices advertise themselves and wait for a connection, often being
+            custom IoT devices.
+        </li>
+        <li>
+            <strong>Server:</strong> Usually the Slave/Peripheral, these devices collect data and provide resources
+            according to their specific use case.
+        </li>
+    </ul>
+    <p>
+        For practical purposes, remember: <br />
+        <strong>Master = Central = Client</strong><br />
+        <strong>Slave = Peripheral = Server. </strong><br />
+        In this guide, we will refer to them as Central and Peripheral.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Connection States</h3>
+    <p>A Central and Peripheral can be in various states:</p>
+    <ul>
+        <li>
+            <strong>Non-Connected:</strong> The Central and Peripheral do not have an established connection and cannot
+            communicate. In this state, there are also sub-states like avertising, scanning, initiating and standby.
+        </li>
+        <li>
+            <strong>Connected:</strong> This state represents the initial stage of establishing a wireless communication
+            link between two BLE devices. The Central discovers and initiates a connection request to the Peripheral.
+            During this process, they coordinate connection intervals and set up communication channels. This connection
+            is BLE specific and unencrypted.
+        </li>
+        <li>
+            <strong>Paired:</strong> Pairing establishes a trusted relationship between the devices, involving an
+            exchange of capabilities and security keys. Various methods, such as Just Works, Passkey Entry, or Out of
+            Band (OOB), authenticate the devices to each other, agreeing upon security levels for the connection.
+        </li>
+        <li>
+            <strong>Bonded:</strong> Bonding is a more advanced step than pairing, where security keys are stored for
+            future reconnections. Once bonded, devices can automatically reconnect securely without repeating the
+            pairing process, saving time and enhancing convenience for regular connections.
+        </li>
+    </ul>
+</div>

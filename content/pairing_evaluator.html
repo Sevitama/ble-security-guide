@@ -1,0 +1,143 @@
+<div class="bubble">
+    <h2>BLE pairing evaluator</h2>
+    <p>
+        The evaluator lets you choose parameters for both sides of the connection. With all parameters selected, it
+        shows you below which connection method will be chosen based on the parameters, what is specific about the OS
+        that is used and what possible attacks could be used with this connection. Click on the Parameters to load an
+        explanation of the parameters.
+    </p>
+</div>
+<form>
+    <div class="form-container">
+        <div class="form-section">
+            <h3>Initiator Request</h3>
+            <table>
+                <tr>
+                    <td>
+                        <label for="initiatorOperationSystem">Operation System:</label>
+                    </td>
+                    <td>
+                        <select
+                            id="initiatorOperationSystem"
+                            onchange="handleSpecificOSinForm(this.options[this.selectedIndex].value)"
+                        >
+                            <option value="Custom">Custom</option>
+                            <option value="Android">Android</option>
+                            <option value="iOS">iOS</option>
+                            <option value="WebBluetooth">WebBluetooth</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="initiatorIoCapabilities">IO Capabilities:</label>
+                    </td>
+                    <td>
+                        <select id="initiatorIoCapabilities">
+                            <option value="DisplayOnly">Display Only</option>
+                            <option value="DisplayYesNo">Display Yes/No</option>
+                            <option value="KeyboardOnly">Keyboard Only</option>
+                            <option value="NoInputNoOutput">No Input No Output</option>
+                            <option value="KeyboardDisplay">Keyboard Display</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="initiatorOobData">OOB Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="initiatorOobData" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="initiatorBonding">Bonding Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="initiatorBonding" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="initiatorMitm">MITM Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="initiatorMitm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="initiatorSecureConnection">Secure Connection Flag: &nbsp</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="initiatorSecureConnection" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-section">
+            <h3>Responder Request</h3>
+            <table>
+                <tr>
+                    <td>
+                        <label for="responderOperationSystem">Operation System:</label>
+                    </td>
+                    <td>Custom</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="responderIoCapabilities">IO Capabilities:</label>
+                    </td>
+                    <td>
+                        <select id="responderIoCapabilities">
+                            <option value="DisplayOnly">Display Only</option>
+                            <option value="DisplayYesNo">Display Yes/No</option>
+                            <option value="KeyboardOnly">Keyboard Only</option>
+                            <option value="NoInputNoOutput">No Input No Output</option>
+                            <option value="KeyboardDisplay">Keyboard Display</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="responderOobData">OOB Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="responderOobData" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="responderBonding">Bonding Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="responderBonding" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="responderMitm">MITM Flag:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="responderMitm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="responderSecureConnection">Secure Connection Flag: &nbsp</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="responderSecureConnection" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="submit-button">
+        <input type="button" class="button-load" value="Submit" onclick="loadEvaluations()" />
+    </div>
+</form>
+<div id="evaluationContainer" class="bubble" hidden>
+    <!-- Loaded modules will appear here -->
+</div>

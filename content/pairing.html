@@ -1,0 +1,311 @@
+<div class="bubble">
+    <h2>Pairing Process</h2>
+    <p>
+        BLE pairing occurs in three phases, where the Central and Peripheral exchange information and keys to establish
+        a secure connection. These phases include the exchange of pairing features, key generation, and specific key
+        distribution.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Phase 1 - Pairing Feature Exchange</h3>
+    <p>
+        During this phase, the Central and Peripheral devices exchange information to determine the key generation
+        method for the second phase. This exchange is done through a pairing request and response, with the parameters
+        included in these packets. The key generation method is selected as follows.
+    </p>
+    <p>
+        First, the Authentication Requirement Secure Connection (SC) Flag is checked. If both devices have this flag
+        set, the pairing mechanism used is LE Secure Connection. If one or both devices do not have this flag set, the
+        pairing mechanism used is LE Legacy. This is later needed to see if OOB data is used or which key generation
+        method is selected based on the IO Capabilities.
+    </p>
+    <div class="centered">
+        <table class="table-parameters">
+            <thead>
+                <tr>
+                    <th colspan="2" rowspan="2"></th>
+                    <th style="border-top-left-radius: 4px" colspan="4">Initiator</th>
+                </tr>
+                <tr>
+                    <th>OOB Set</th>
+                    <th>OOB Not Set</th>
+                    <th>MITM Set</th>
+                    <th>MITM Not Set</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th
+                        style="border-top-left-radius: 4px; border-bottom-left-radius: 4px"
+                        id="left-header"
+                        rowspan="4"
+                    >
+                        Responser
+                    </th>
+                    <th id="left-header">OOB Set</th>
+                    <td>Use OOB</td>
+                    <td>Legacy: Check MITM<br />SC: Use OOB</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th id="left-header">OOB Not Set</th>
+                    <td>Legacy: Check MITM<br />SC: Use OOB</td>
+                    <td>Check MITM</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th id="left-header">MITM Set</th>
+                    <td></td>
+                    <td></td>
+                    <td>Use IO Capabilities</td>
+                    <td>Use IO Capabilities</td>
+                </tr>
+                <tr>
+                    <th style="border-bottom-left-radius: 0px" id="left-header">MITM Not Set</th>
+                    <td></td>
+                    <td></td>
+                    <td>Use IO Capabilities</td>
+                    <td>Use Just Works</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        Next, the Out of Band (OOB) flag is checked. In LE Legacy pairing, if both devices have Out of Band
+        authentication data, the Authentication Requirements Flags are ignored, and the Out of Band pairing method is
+        used. In LE Secure Connections pairing, if one or both devices have out of band authentication data, the
+        Authentication Requirements Flags are ignored, and the Out of Band pairing method is used. If neither of these
+        conditions is met, the pairing method is determined based on the MITM (Man-in-the-Middle) flag. If both devices
+        do not have the MITM option set in the Authentication Requirements Flags, the IO capabilities are ignored, and
+        the Just Works method is used. If at least one of the devices has the MITM flag set, the pairing method is
+        selected according to the IO capabilities.
+    </p>
+    <div class="centered">
+        <table class="table-parameters">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th style="border-top-left-radius: 4px" colspan="5">Initiator</th>
+                </tr>
+                <tr>
+                    <th style="border-top-left-radius: 4px">Responder</th>
+                    <th>DisplayOnly</th>
+                    <th>DisplayYesNo</th>
+                    <th>KeyboardOnly</th>
+                    <th>NoInputNoOutput</th>
+                    <th>KeyboardDisplay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th id="left-header">DisplayOnly</th>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                </tr>
+                <tr>
+                    <th id="left-header">DisplayYesNo</th>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>
+                        LE Legacy:<br />Just Works<br /><i>Unauthenticated</i><br /><br />LE Secure Connection:<br />Numeric
+                        Comparison<br /><i>Authenticated</i>
+                    </td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>
+                        LE Legacy:<br />Passkey Entry<br /><i>Authenticated</i><br /><br />LE Secure Connection:<br />Numeric
+                        Comparison<br /><i>Authenticated</i>
+                    </td>
+                </tr>
+                <tr>
+                    <th id="left-header">KeyboardOnly</th>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                </tr>
+                <tr>
+                    <th id="left-header">NoInputNoOutput</th>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                </tr>
+                <tr>
+                    <th id="left-header">KeyboardDisplay</th>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>
+                        LE Legacy:<br />Passkey Entry<br /><i>Authenticated</i><br /><br />LE Secure Connection:<br />Numeric
+                        Comparison<br /><i>Authenticated</i>
+                    </td>
+                    <td>Passkey Entry<br /><i>Authenticated</i></td>
+                    <td>Just Works<br /><i>Unauthenticated</i></td>
+                    <td>
+                        LE Legacy:<br />Passkey Entry<br />Authenticated<br /><br />LE Secure Connection:<br />Numeric
+                        Comparison<br /><i>Authenticated</i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        The generated key will either be an Authenticated or Unauthenticated key. If the out of band authentication
+        method is used and the Out of Band mechanism is known to be secure from eavesdropping the key is assumed to be
+        authenticated. The exact strength depends upon the method used to transfer the out of band information. If the
+        key generation method does not result in a key that provides sufficient security properties then the device must
+        send the Pairing Failed command with the error code “Authentication Requirements”. This situation can occur, for
+        example, if one device has the MITM flag set but the Just Works method was selected as the key generation
+        method.
+    </p>
+
+    <p>
+        <strong>Just Works:</strong> In this method, no interaction is required from the user's side, except for
+        initiating the pairing process. The devices will automatically establish an encrypted but not authenticated
+        connection without any further input from the user.
+    </p>
+    <p>
+        <strong>Passkey Entry:</strong> With this method, the user is required to enter a specific passkey during the
+        pairing process. The passkey must be accurately inputed on the device equipped with a keyboard, and it will be
+        displayed on the device that has a display. This ensures that the correct passkey is entered, thereby
+        establishing an authenticated and encrypted connection between the devices.
+    </p>
+    <p>
+        <strong>Numeric Comparison:</strong> In this method, the user is prompted to compare the passkey displayed on
+        both devices. By examining the passkeys and verifying that they match, the user can press the "Yes" button to
+        confirm that the passkeys are indeed the same. This step establishes an authenticated and encrypted connection
+        between the devices.
+    </p>
+    <p>
+        <strong>Out of Band:</strong> With this method, the user obtains the pairing key from an external source. This
+        can be accomplished through various means, such as Near Field Communication (NFC) or scanning a QR Code. By
+        acquiring the pairing key from an alternative source, the user can establish a secure connection between the
+        devices, ensuring a reliable and efficient pairing process.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Phase 2 - Short or Long Term Key Generation</h3>
+
+    <h4>LE Legacy</h4>
+    <p>
+        In Legacy pairing, the devices use the key generation method to create a temporary key. For just works, the TK
+        is set to 0, for passkey entry, the TK is created from the entered passkey. For example, if the user entered
+        passkey is '019655' then TK shall be 0x00000000000000000000000000004CC7. For OOB, the TK can be any 128-bit key.
+        Both devices then generate a random number and a confirm value (Mconfirm) using the TK and other parameters as
+        input. They exchange the numbers and re-do the calculations. If the calculated confirm values do not match, the
+        pairing process is aborted. If they do match, the initiating device calculates Short-term key (STK) and enables
+        encryption.
+    </p>
+    <div class="columns">
+        <div class="three-columns">
+            <p><strong>LE Legacy - Just Works</strong></p>
+            <img src="/public/images/pairing_phase2_legacy_justworks.png" alt="LE Legacy Just Works" width="100%" />
+        </div>
+        <div class="three-columns three-columns-spacing">
+            <p><strong>LE Legacy - Passkey</strong></p>
+            <img src="/public/images/pairing_phase2_legacy_passkey.png" alt="LE Legacy Passkey" width="100%" />
+        </div>
+        <div class="three-columns">
+            <p><strong>LE Legacy - OOB</strong></p>
+            <img src="/public/images/pairing_phase2_legacy_oob.png" alt="LE Legacy OOB" width="100%" />
+        </div>
+    </div>
+
+    <h4>LE Secure Connection</h4>
+    <p>
+        In a first stage the devices authenticate each other to ensure no Man-in-the-middle is present. Both devices
+        generate their own ECDH key pairs. These pairs consist of a private key and a public key. The public keys are
+        then exchanged between devices during pairing. After exchanging public keys, the devices generate nonces and
+        commitments to valudate the public keys.
+    </p>
+    <div class="centered">
+        <p><strong>Public Key Exchange</strong></p>
+        <img
+            src="/public/images/pairing_phase2_sc_dhpk.png"
+            alt="LE Secure Connection - Public Key Exchange"
+            width="33%"
+        />
+    </div>
+    <div class="columns">
+        <div class="three-columns">
+            <p><strong>LE Secure Connection - Just Works</strong></p>
+            <img
+                src="/public/images/pairing_phase2_sc_jw_nc.png"
+                alt="LE Secure Connection - Just Works"
+                width="100%"
+            />
+        </div>
+        <div class="three-columns three-columns-spacing">
+            <p><strong>LE Secure Connection - Passkey</strong></p>
+            <img src="/public/images/pairing_phase2_sc_passkey.png" alt="LE Secure Connection - Passkey" width="100%" />
+        </div>
+        <div class="three-columns">
+            <p><strong>LE Secure Connection - OOB</strong></p>
+            <img src="/public/images/pairing_phase2_sc_oob.png" alt="LE Secure Connection - OOB" width="100%" />
+        </div>
+    </div>
+    <div class="columns">
+        <div class="three-columns">
+            <p>
+                For Just Works and Numeric Comparison each device selects a random 128-bit nonce. The responding device
+                then computes a confirmation value with a AES-CMAC function, which takes both public keys, the random
+                nonce and 0 as input. The devices exchange their nonce values and the initiating device confirms the
+                value. If there is a failure at this point, the protocol aborts. When using Just Works, commitment
+                checks are not performed and the user is not shown the 6-digit values. When using Numeric Comparison,
+                the devices compute 6-digit confirmation values that are displayed to the user. The user checks if these
+                values match and confirms accordingly. If there is no match, the protocol aborts and new nonces must be
+                generated.
+            </p>
+        </div>
+        <div class="three-columns three-columns-spacing">
+            <p>
+                For Passkey Entry the user enters the same Passkey into both devices. Alternatively, the Passkey can be
+                generated on one device and entered into the other. This short key will be used to authenticate the
+                devices. They both select a random 128-bit nonce and compute a confirmation value with a AES-CMAC
+                function, which takes both public keys, the random nonce and one bit of the passkey as input. They
+                exchange the random nonce and the confirmation value and redo the calculation to validate the value.
+                This is then repeated for every bit of the passkey. They can then validate they passkey after confirming
+                all values.
+            </p>
+        </div>
+        <div class="three-columns">
+            <p>
+                In OOB, a random value, the Confirm value and the devices addresses, which are normally transfered over
+                the air, are exchange over the Out of Band media.
+            </p>
+        </div>
+    </div>
+
+    <div class="centered">
+        <p><strong>Long Term Key generation</strong></p>
+        <img
+            src="/public/images/pairing_phase2_sc_ltk.png"
+            alt="LE Secure Connection - LTK generation"
+            width="33%"
+        /><br />
+        <img
+            src="/public/images/pairing_phase2_sc_confirm.png"
+            alt="LE Secure Connection - LTK validation"
+            width="33%"
+        />
+    </div>
+    <p>
+        In a second stage the devices exchange a Long-term key (LTK) for encryption. The devices compute the MacKey and
+        LTK using the exchanged values and shared key. They compute a new confirmation value with the already exchanged
+        values and the new MacKey. The devices exchange and validate the confirmation values. Failure indicates pairing
+        is not confirmed and protocol is aborted.
+    </p>
+</div>
+<div class="bubble">
+    <h3>Phase 3 - Transport specific key distribution</h3>
+    <p>After the long or short term key generation, transport specific keys are distributed.</p>
+
+    <div class="centered">
+        <img src="/public/images/pairing_phase3.png" alt="Possible keys" width="33%" />
+    </div>
+</div>

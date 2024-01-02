@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BLE Security Guide</title>
+        <link rel="stylesheet" href="public/style.css" />
+        <script type="text/javascript" src="public/functions.js"></script>
+    </head>
+
+    <body>
+        <div class="main-container">
+            <button id="toggleDarkMode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
+            <h1>BLE Security Guide</h1>
+            <nav class="modern-nav">
+                <ul>
+                    <li><a onclick="loadChapter('content/overview.html', 'contentContainer')">Overview</a></li>
+                    <li><a onclick="loadChapter('content/security.html', 'contentContainer')">Security</a></li>
+                    <li><a onclick="loadChapter('content/pairing.html', 'contentContainer')">Pairing Process</a></li>
+                    <li>
+                        <a onclick="loadChapter('content/pairing_evaluator.html', 'contentContainer')"
+                            >Pairing Evaluator</a
+                        >
+                    </li>
+                    <li>
+                        <a onclick="loadChapter('content/operating_systems.html', 'contentContainer')"
+                            >Operating Systems</a
+                        >
+                    </li>
+                    <li><a onclick="loadChapter('content/threats.html', 'contentContainer')">Threats</a></li>
+                </ul>
+            </nav>
+
+            <div id="contentContainer">
+                <div class="bubble">
+                    <h2>Introduction</h2>
+                    <p>
+                        This guide is a comprehensive resource that will equip you with all the necessary information to
+                        securely implement Bluetooth Low Energy (BLE) communication. If you're new to BLE, I highly
+                        recommend starting with the
+                        <a
+                            href="https://academy.nordicsemi.com/courses/bluetooth-low-energy-fundamentals/"
+                            target="_blank"
+                            >Bluetooth Low Energy Fundamentals</a
+                        >
+                        course available on Nordic Semiconductor's DevAcademy. This course will provide you with a solid
+                        introduction to the world of BLE.
+                    </p>
+                    <p>
+                        In this guide, our main focus is on everything security related and on connection-oriented
+                        Bluetooth Low Energy communication. Unlike broadcast communication, which involves one device
+                        transmitting data to all devices within range, connection-oriented communication establishes a
+                        dedicated connection between devices for bi-directional communication. By following the
+                        guidelines and recommendations outlined in this guide, you will be able to confidently implement
+                        BLE communication with a strong emphasis on security.
+                    </p>
+                    <p>
+                        If you find any outdated, wrong or not so clear information, feel free to add / edit / remove
+                        content with a merge request!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

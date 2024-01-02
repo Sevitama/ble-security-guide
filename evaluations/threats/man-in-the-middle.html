@@ -1,0 +1,10 @@
+<p>
+    <strong>Threat - Man-in-the-Middle:</strong> The connection is at risk of Man-in-the-Middle (MITM) attacks. This is
+    because LE Legacy pairing with Just Works sets the Temporary key to 0, which then is used to calculate the
+    Short-term-key. To bolster both confidentiality and integrity, it is advised to upgrade to LE Secure Connections or
+    employ Out-of-Band (OOB) data for secure key exchange.
+</p>
+<p>
+    This connection may also be vulnerable to identity tracking. Ensure the utilization of random and rotating BLE
+    addresses and facilitate the exchange of an Identity Key during phase 3 of the pairing process.
+</p>

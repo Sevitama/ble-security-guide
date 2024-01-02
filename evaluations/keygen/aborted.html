@@ -1,0 +1,16 @@
+<p>
+    <strong>This pairing will be aborted!</strong> This request will be terminated with a "pairing failed" message,
+    citing 'Authentication Requirements' as the reason. This occurs when at least one device has activated the MITM
+    (Man-In-The-Middle) Flag within the Authentication Requirements, and the chosen key generation method is 'Just
+    Works' (based on the IO Capabilities). This termination is independent of the pairing mechanism selected, whether it
+    is LE Legacy or LE Secure Connection.
+</p>
+<div class="centered">
+    <img src="/public/images/justworks_failed.png" alt="Pairing failed" width="80%" />
+</div>
+<p>
+    An example pcap file of such a connection can be found here:
+    <a href="/public/wireshark/justworks_failed.pcapng" target="_blank">
+        <img src="/public/images/wirehark_icon.png" alt="PCAP Example" width="30px" />
+    </a>
+</p>
